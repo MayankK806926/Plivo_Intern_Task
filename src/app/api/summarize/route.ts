@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server';
 import pdf from 'pdf-parse';
 import mammoth from 'mammoth';
 import fetch from 'node-fetch';
-import cheerio from 'cheerio';
+import { load } from 'cheerio';
 
 export async function POST(req: NextRequest) {
   const formData = await req.formData();
@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
       }
     } else if (url && typeof url === 'string') {
       const html = await fetch(url).then(res => res.text());
-      const $ = cheerio.load(html);
+  const $ = load(html);
       text = $('body').text();
     }
   } catch (e) {
